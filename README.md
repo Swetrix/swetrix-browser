@@ -1,2 +1,2 @@
-# swetrix-firefox
-Firefox Extension for Swetrix Analytics
+# Work in Progress
+Browser Extension for Swetrix Analytics
