@@ -1,0 +1,70 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Login</title>
+<link rel="stylesheet" href="chrome://global/skin/in-content/common.css">
+<link rel="stylesheet" href="../../styles.css">
+
+<header class="w-full py-2 px-4 bg-gray-50 flex items-center justify-between border-b-2 border-indigo-600">
+  <div>
+    <span class="sr-only">Swetrix</span>
+    <img class="h-10" src="../../logo_blue.svg" alt="">
+  </div>
+  <p class="text-indigo-600 font-bold text-xl">
+    Web Extension
+  </p>
+</header>
+
+<form id="login-form" class='px-4 py-4 w-full bg-gray-50 mx-auto'>
+  <h2 class='text-2xl font-extrabold text-gray-900'>
+    Sign in to your account
+  </h2>
+  <div class="mt-4">
+    <div class="">
+      <label for="email" class="block text-sm font-medium text-gray-700">
+        Email
+      </label>
+    </div>
+    <div class="mt-1 relative">
+      <input
+        type="email" 
+        name="email"
+        id="email"
+        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm p-2 border-gray-300 rounded-md"
+        placeholder="you@example.com"
+        aria-describedby="email-optional"
+        value=""
+      >
+    </div>
+  </div>
+  <div class="mt-4">
+    <div class="">
+      <label for="email" class="block text-sm font-medium text-gray-700">
+        Password
+      </label>
+    </div>
+    <div class="mt-1 relative">
+      <input
+        type="password" 
+        name="password"
+        id="password"
+        class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm p-2 border-gray-300 rounded-md"
+        placeholder="Password"
+        aria-describedby="password-optional"
+        value=""
+      >
+    </div>
+  </div>
+  <div class="flex items-baseline justify-between">
+    <button
+      type="submit"
+      class="inline-flex select-none items-center border border-transparent leading-4 font-medium rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 px-8 py-2 mt-4 text-sm"
+    >
+      Sign in
+    </button>
+    <a class="underline text-blue-600 hover:text-indigo-800 text-md" href="https://swetrix.com/signup">
+      Sign up instead
+    </a>
+  </div>
+</form>
+
+<script src="login.js" type="module"></script>

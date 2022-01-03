@@ -1,0 +1,29 @@
+{
+  "name": "Swetrix",
+  "version": "0.0.0",
+  "description": "Swetrix Analytics Extension",
+  "homepage_url": "https://swetrix.com",
+  "manifest_version": 2,
+  "minimum_chrome_version": "74",
+  "applications": {
+    "gecko": {
+      "id": "extension@swetrix.com",
+      "strict_min_version": "67.0"
+    }
+  },
+  "icons": {
+    "512": "icon.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "browser_action": {
+    "default_popup": "pages/auth/login.html"
+  },
+  "background": {
+    "persistent": false,
+    "scripts": [
+      "background.js"
+    ]
+  }
+}
