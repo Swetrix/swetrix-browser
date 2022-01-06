@@ -33,6 +33,8 @@
     }
   },
   "dependencies": {
+    "axios": "^0.24.0",
+    "lodash": "^4.17.21",
     "postcss": "^8.4.5",
     "tailwindcss": "^2.2.19",
     "webext-options-sync": "^2.0.1",
