@@ -8,8 +8,15 @@ const api = axios.create({
 })
 
 api.interceptors.request.use(
-  (config) => {
-    const token = getAccessToken()
+  async (config) => {
+    let token
+
+    try {
+      token = await getAccessToken()
+    } catch (e) {
+      console.error('[API REQUEST INTERCEPTOR]', e)
+    }
+
     if (token) {
       config.headers['Authorization'] = `Bearer ${token}`
     }
@@ -22,9 +29,13 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
   (response) => response,
-  (error) => {
+  async (error) => {
     if (error.response?.data.statusCode === 401) {
-      // removeAccessToken()
+      try {
+        await removeAccessToken()
+      } catch (e) {
+        console.error('[API RESPONSE INTERCEPTOR]', e)
+      }
     }
     return Promise.reject(error)
   }

@@ -3,12 +3,12 @@
   "scripts": {
     "prebuild": "rm -rf dist .cache .parcel-cache",
     "build:tailwind": "tailwindcss build -i src/styles.css -c ./tailwind.config.js -o distribution/styles.css",
-    "build": "parcel build src/manifest.json --no-content-hash --no-source-maps --dist-dir distribution --no-cache --detailed-report 0 && npm run build:tailwind",
+    "build": "parcel build manifest.json --no-content-hash --no-source-maps --dist-dir distribution --no-cache --detailed-report 0 && npm run build:tailwind",
     "lint": "run-p lint:*",
     "lint-fix": "run-p 'lint:* -- --fix'",
     "lint:js": "xo",
     "test": "run-p lint:* build",
-    "watch": "npm run build:tailwind && parcel watch src/manifest.json --dist-dir distribution --no-cache --no-hmr"
+    "watch": "npm run build:tailwind && parcel watch manifest.json --dist-dir distribution --no-cache --no-hmr"
   },
   "browserslist": [
     "last 1 Chrome version",
@@ -33,19 +33,31 @@
     }
   },
   "dependencies": {
+    "@types/react": "^17.0.38",
+    "@types/react-dom": "^17.0.11",
     "axios": "^0.24.0",
+    "classnames": "^2.3.1",
     "lodash": "^4.17.21",
     "postcss": "^8.4.5",
+    "prop-types": "^15.8.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.6",
+    "react-router-dom": "^5.3.0",
+    "redux": "^4.1.2",
+    "redux-saga": "^1.1.3",
+    "redux-auth-wrapper": "^3.0.0",
     "tailwindcss": "^2.2.19",
     "webext-options-sync": "^2.0.1",
     "webextension-polyfill": "^0.8.0"
   },
   "devDependencies": {
-    "@parcel/config-webextension": "^2.0.0-rc.0",
-    "@parcel/transformer-image": "^2.0.0-rc.0",
+    "@babel/core": "^7.16.7",
+    "@parcel/config-webextension": "^2.1.0",
+    "@parcel/transformer-image": "^2.1.0",
     "autoprefixer": "^10.4.1",
     "npm-run-all": "^4.1.5",
-    "parcel": "^2.0.0-rc.0",
+    "parcel": "^2.1.0",
     "postcss-import": "^14.0.2",
     "xo": "^0.44.0"
   },

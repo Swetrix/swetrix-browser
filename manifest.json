@@ -12,21 +12,19 @@
     }
   },
   "icons": {
-    "512": "icon.png"
+    "512": "assets/icon.png"
   },
   "permissions": [
-    "storage",
-    "tabs",
-    "cookies",
-    "https://*.swetrix.com/"
+    "cookies"
   ],
   "browser_action": {
-    "default_popup": "pages/auth/login.html"
+    "default_icon": "assets/icon.png",
+    "default_popup": "src/static/popup.html"
   },
   "background": {
     "persistent": false,
     "scripts": [
-      "background.js"
+      "src/scripts/background.js"
     ]
   }
 }
