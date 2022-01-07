@@ -1,0 +1,5 @@
+export const types = {
+  LOGIN_FAILED: 'LOGIN_FAILED',
+  GENERIC_ERROR: 'GENERIC_ERROR',
+  CLEAR_ERRORS: 'CLEAR_ERRORS',
+}
