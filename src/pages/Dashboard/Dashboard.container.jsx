@@ -1,7 +1,9 @@
 import { connect } from 'react-redux'
-import { authActions } from '../../redux/actions/auth'
 import Dashboard from './Dashboard'
 
-const mapDispatchToProps = (dispatch) => ({})
+const mapStateToProps = (state) => ({
+  projects: state.ui.projects.projects,
+  isLoading: state.ui.projects.isLoading,
+})
 
-export default connect(null, mapDispatchToProps)(Dashboard)
+export default connect(mapStateToProps)(Dashboard)

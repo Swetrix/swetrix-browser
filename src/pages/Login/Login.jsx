@@ -38,7 +38,7 @@ const Login = ({ login }) => {
   }
 
   return (
-    <form id='login-form' className='px-4 py-4 w-full bg-gray-50 mx-auto' onSubmit={onSubmit}>
+    <form id='login-form' className='px-4 py-4 w-full mx-auto' onSubmit={onSubmit}>
       <h2 className='text-2xl font-extrabold text-gray-900'>
         Sign in to your account
       </h2>
@@ -92,21 +92,5 @@ const Login = ({ login }) => {
     </form>
   )
 }
-
-// <!doctype html>
-// <meta charset='utf-8'>
-// <title>Login</title>
-// <link rel='stylesheet' href='chrome://global/skin/in-content/common.css'>
-// <link rel='stylesheet' href='../../styles.css'>
-
-// <header className='w-full py-2 px-4 bg-gray-50 flex items-center justify-between border-b-2 border-indigo-600'>
-//   <div>
-//     <span className='sr-only'>Swetrix</span>
-//     <img className='h-10' src='../../logo_blue.svg' alt=''>
-//   </div>
-//   <p className='text-indigo-600 font-bold text-xl'>
-//     Web Extension
-//   </p>
-// </header>
 
 export default notAuthenticated(memo(Login))
