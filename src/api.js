@@ -62,6 +62,25 @@ export const login = (credentials) =>
         : error.response.data.message
     })
 
+export const getProjectData = (
+  pid,
+  tb = 'hour',
+  period = '3d',
+  from = '',
+  to = ''
+) =>
+  api
+    .get(
+      `log?pid=${pid}&timeBucket=${tb}&period=${period}&from=${from}&to=${to}`
+    )
+    .then((response) => response.data)
+    .catch((error) => {
+      debug('%s', error)
+      throw _isEmpty(error.response.data?.message)
+        ? error.response.data
+        : error.response.data.message
+    })
+
 export const getProjects = () =>
   api
     .get('/project')

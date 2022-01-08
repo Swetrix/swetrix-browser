@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom'
 
 import Login from './Login'
 import Dashboard from './Dashboard'
+import Project from './Project'
 import Loading from '../components/Loading'
 import Header from '../components/Header'
 import { authMe } from '../api'
@@ -48,6 +49,7 @@ const App = () => {
         <Switch>
           <Route path={routes.signin} component={Login} exact />
           <Route path={routes.dashboard} component={Dashboard} exact />
+          <Route path={routes.project} component={Project} exact />
           <Redirect to={routes.signin} />
         </Switch>
       </>

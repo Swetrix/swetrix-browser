@@ -3,8 +3,12 @@
 
 html {
   min-width: 350px;
-  min-height: 320px;
-  max-height: 320px;
   background-color: #f9fafb;
   overflow-x: hidden; /* Required to hide horizontal scroll on Firefox */
+}
+
+body {
+  height: 320px;
+  overflow: auto;
+  scrollbar-width: thin;
 }

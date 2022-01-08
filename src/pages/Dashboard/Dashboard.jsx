@@ -1,4 +1,4 @@
-import React, { useState, memo } from 'react'
+import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
 import cx from 'classnames'
 import dayjs from 'dayjs'
@@ -10,7 +10,6 @@ import { EyeIcon } from '@heroicons/react/outline'
 import { CalendarIcon } from '@heroicons/react/outline'
 import { ArrowSmUpIcon } from '@heroicons/react/solid'
 import { ArrowSmDownIcon } from '@heroicons/react/solid'
-import { XCircleIcon } from '@heroicons/react/solid'
 
 import { ActivePin, InactivePin } from '../../ui/Pin'
 import PulsatingCircle from '../../ui/icons/PulsatingCircle'

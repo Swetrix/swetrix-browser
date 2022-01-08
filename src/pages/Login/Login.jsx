@@ -85,7 +85,7 @@ const Login = ({ login }) => {
         >
           Sign in
         </button>
-        <a className='underline text-blue-600 hover:text-indigo-800 text-md' href='https://swetrix.com/signup'>
+        <a className='underline text-blue-600 hover:text-indigo-800 text-md' href='https://swetrix.com/signup' target='_blank'>
           Sign up instead
         </a>
       </div>
