@@ -3,11 +3,12 @@ import browser from 'webextension-polyfill'
 const TOKEN = 'token'
 
 export const getAccessToken = async () => {
-  await browser.cookies.get({
+  const result = await browser.cookies.get({
     name: TOKEN,
     url: 'https://swetrix.com',
-    firstPartyDomain: 'swetrix.com',
   })
+
+  return result?.value
 }
 
 export const setAccessToken = async token => {
@@ -25,6 +26,5 @@ export const removeAccessToken = async () => {
   await browser.cookies.remove({
     name: TOKEN,
     url: 'https://swetrix.com',
-    firstPartyDomain: 'swetrix.com',
   })
 }

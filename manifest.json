@@ -15,7 +15,8 @@
     "512": "assets/icon.png"
   },
   "permissions": [
-    "cookies"
+    "cookies",
+    "*://swetrix.com/*"
   ],
   "browser_action": {
     "default_icon": "assets/icon.png",
