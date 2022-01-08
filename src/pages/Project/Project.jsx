@@ -9,6 +9,7 @@ import _keys from 'lodash/keys'
 import _map from 'lodash/map'
 import _includes from 'lodash/includes'
 import _last from 'lodash/last'
+import _truncate from 'lodash/truncate'
 import _isEmpty from 'lodash/isEmpty'
 import _find from 'lodash/find'
 
@@ -187,7 +188,9 @@ const Project = ({
                     <>
                       <Flag className='rounded-md' country={name} size={21} alt='' />
                       &nbsp;&nbsp;
-                      {countries.getName(name, 'en')}
+                      {countries.getName(name, 'en', {
+                        select: 'alias',
+                      })}
                     </>
                   )} />
                 )
@@ -209,7 +212,9 @@ const Project = ({
                         {!_isEmpty(url.hostname) && (
                           <img className='w-5 h-5 mr-1.5' src={`https://icons.duckduckgo.com/ip3/${url.hostname}.ico`} alt='' />
                         )}
-                        {name}
+                        {_truncate(name, {
+                          length: 25,
+                        })}
                       </a>
                     )
                   }}

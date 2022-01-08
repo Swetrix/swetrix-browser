@@ -20,9 +20,12 @@ import PulsatingCircle from '../../ui/icons/PulsatingCircle'
 const ENTRIES_PER_PANEL = 5
 
 const PanelContainer = ({
-  name, children,
+  name, children, isOverview,
 }) => (
-  <div className='relative bg-white dark:bg-gray-750 pt-2 px-4 pb-12 min-h-72 shadow rounded-lg overflow-hidden'>
+  <div className={cx('relative bg-white dark:bg-gray-750 pt-2 px-4 min-h-72 shadow rounded-lg overflow-hidden', {
+    'pb-2': isOverview,
+    'pb-8': !isOverview,
+  })}>
     <h3 className='text-lg leading-6 font-semibold mb-2 text-gray-900 dark:text-gray-50'>{name}</h3>
     <div className='flex flex-col h-full scroll-auto'>
       {children}
@@ -44,7 +47,7 @@ const Overview = ({
   const uniques = _sum(chartData?.uniques) || 0
 
   return (
-    <PanelContainer name='Overview'>
+    <PanelContainer name='Overview' isOverview>
       <div className='flex text-lg justify-between'>
         <div className='flex items-center dark:text-gray-50'>
           <PulsatingCircle className='mr-1.5' type='big' />
@@ -158,7 +161,7 @@ const CustomEvents = ({
 
   return (
     <PanelContainer name='Custom events'>
-      <table className='table-fixed'>
+      <table className='table-fixed text-base'>
         <thead>
           <tr>
             <th className='w-4/6 text-left text-gray-900 dark:text-gray-50'>Event</th>
@@ -220,7 +223,7 @@ const Panel = ({
 
         return (
           <Fragment key={key}>
-            <div className='flex justify-between mt-1 dark:text-gray-50'>
+            <div className='flex text-base justify-between mt-1 dark:text-gray-50'>
               {linkContent ? (
                 <a className={cx('flex label hover:underline text-blue-600 dark:text-blue-500', { capitalize })} href={rowData} target='_blank' rel='noopener noreferrer'>
                   {rowData}
