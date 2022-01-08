@@ -20,6 +20,7 @@
     "envs": [
       "browser"
     ],
+    "extends": "xo-react",
     "rules": {
       "no-unused-vars": [
         "error",
@@ -29,7 +30,11 @@
       ],
       "unicorn/prefer-module": "off",
       "no-trailing-spaces": "warn",
-      "capitalized-comments": "off"
+      "capitalized-comments": "off",
+      "unicorn/filename-case": "off",
+      "import/extensions": "off",
+      "node/file-extension-in-import": "off",
+      "object-curly-spacing": "off"
     }
   },
   "dependencies": {
@@ -58,6 +63,9 @@
     "@parcel/config-webextension": "^2.1.0",
     "@parcel/transformer-image": "^2.1.0",
     "autoprefixer": "^10.4.1",
+    "eslint-config-xo-react": "^0.25.0",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
     "npm-run-all": "^4.1.5",
     "parcel": "^2.1.0",
     "postcss-import": "^14.0.2",
