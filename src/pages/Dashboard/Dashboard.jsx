@@ -1,5 +1,6 @@
 import React, { useState, memo } from 'react'
 import { Link } from 'react-router-dom'
+import cx from 'classnames'
 import dayjs from 'dayjs'
 import _isEmpty from 'lodash/isEmpty'
 import _isNumber from 'lodash/isNumber'
@@ -15,16 +16,17 @@ import { ActivePin, InactivePin } from '../../ui/Pin'
 import PulsatingCircle from '../../ui/icons/PulsatingCircle'
 import Loading from '../../components/Loading'
 import { isAuthenticated } from '../../hoc/protected'
+import routes from '../../routes'
 
 const ProjectCart = ({
-  name, url, created, active, overall, t, language, live, isPublic,
+  name, url, created, active, overall, live, isPublic,
 }) => {
   const statsDidGrowUp = overall?.percChange >= 0
 
   return (
     <li>
       <Link to={url} className='block hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-800 dark:border-gray-700'>
-        <div className='px-4 py-4 sm:px-6'>
+        <div className='px-3 py-3'>
           <div className='flex items-center justify-between'>
             <p className='text-lg font-medium text-indigo-600 dark:text-gray-50 truncate'>
               {name}
@@ -40,7 +42,7 @@ const ProjectCart = ({
               )}
             </div>
           </div>
-          <div className='mt-2 sm:flex sm:justify-between'>
+          <div className='sm:flex sm:justify-between'>
             <div className='sm:flex flex-col'>
               <div className='flex items-center mt-2 text-sm text-gray-500 dark:text-gray-300'>
                 <EyeIcon className='flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400 dark:text-gray-300' />
@@ -73,22 +75,20 @@ const ProjectCart = ({
                   </p>
                 </dd>
               </div>
-              <div className='mt-2 flex items-center text-sm text-gray-500 dark:text-gray-300 sm:mt-0'>
+              <div className='flex items-center text-sm text-gray-500 dark:text-gray-300'>
                 <PulsatingCircle className='flex-shrink-0 mr-3 ml-1' />
                 Live visitors:
                 &nbsp;
                 {live}
               </div>
             </div>
-            <div className='mt-2 flex items-center text-sm text-gray-500 dark:text-gray-300'>
+            <div className='flex items-center text-sm text-gray-500 dark:text-gray-300'>
               <CalendarIcon className='flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400 dark:text-gray-300' />
               <p>
                 Created at
                 &nbsp;
                 <time dateTime={dayjs(created).format('YYYY-MM-DD')}>
-                  {language === 'en'
-                    ? dayjs(created).locale(language).format('MMMM D, YYYY')
-                    : dayjs(created).locale(language).format('D MMMM, YYYY')}
+                  {dayjs(created).locale('en').format('MMMM D, YYYY')}
                 </time>
               </p>
             </div>
@@ -120,19 +120,18 @@ const Wrapper = ({ children }) => (
 )
 
 const Dashboard = ({ projects, isLoading }) => {
+  console.log(projects, isLoading)
   if (!isLoading) {
     return (
       <Wrapper>
         {_isEmpty(projects) ? (
-          <NoProjects t={t} />
+          <NoProjects />
         ) : (
-          <div className='bg-white shadow overflow-hidden sm:rounded-md mt-10'>
+          <div className='bg-white shadow overflow-hidden sm:rounded-md mt-2'>
             <ul className='divide-y divide-gray-200'>
               {_map(_filter(projects, ({ uiHidden }) => !uiHidden), ({ name, id, created, active, overall, live, public: isPublic }) => (
                 <ProjectCart
                   key={id}
-                  t={t}
-                  language={language}
                   name={name}
                   created={created}
                   active={active}

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import _isEmpty from 'lodash/isEmpty'
+import _map from 'lodash/map'
 
 import { getAccessToken, removeAccessToken } from './utils'
 
