@@ -1,7 +1,7 @@
 import { types } from '../actions/errors/types'
 
 const initialState = {
-  error: null
+  error: null,
 }
 
 const errorsReducer = (state = initialState, { type, payload }) => {

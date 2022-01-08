@@ -34,7 +34,32 @@
       "unicorn/filename-case": "off",
       "import/extensions": "off",
       "node/file-extension-in-import": "off",
-      "object-curly-spacing": "off"
+      "object-curly-spacing": "off",
+      "generator-star-spacing": ["error", {
+        "before": false,
+        "after": true,
+        "anonymous": "neither",
+        "method": {
+          "before": true,
+          "after": true
+        }
+      }],
+      "unicorn/numeric-separators-style": "off",
+      "react/jsx-tag-spacing": ["error", {
+        "beforeSelfClosing": "always"
+      }],
+      "jsx-quotes": ["error", "prefer-single"],
+      "arrow-parens": "off",
+      "unicorn/prevent-abbreviations": "off",
+      "default-param-last": "off",
+      "unicorn/no-abusive-eslint-disable": "off",
+      "react/boolean-prop-naming": "off",
+      "react/jsx-no-bind": ["error", {
+        "allowArrowFunctions": true,
+        "allowFunctions": true
+      }],
+      "react/button-has-type": "off",
+      "max-params": ["error", 5]
     }
   },
   "dependencies": {

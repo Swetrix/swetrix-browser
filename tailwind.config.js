@@ -8,7 +8,7 @@ module.exports = {
       },
     },
     minHeight: {
-     '72': '14rem',
+      72: '14rem',
     },
   },
   plugins: [],

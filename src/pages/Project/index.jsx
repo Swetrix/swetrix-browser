@@ -1,1 +1,3 @@
-export { default } from './Project.container'
+import Project from './Project.container'
+
+export default Project

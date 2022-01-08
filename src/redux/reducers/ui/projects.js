@@ -1,17 +1,13 @@
-import _filter from 'lodash/filter'
-import _findIndex from 'lodash/findIndex'
 import _map from 'lodash/map'
 import { types } from '../../actions/ui/types'
 
-const getInitialState = () => {
-  return {
-    projects: [],
-    isLoading: true,
-    error: null,
-  }
+const initialState = {
+  projects: [],
+  isLoading: true,
+  error: null,
 }
 
-const projectsReducer = (state = getInitialState(), { type, payload }) => {
+const projectsReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case types.SET_PROJECTS: {
       const { projects } = payload
@@ -30,7 +26,7 @@ const projectsReducer = (state = getInitialState(), { type, payload }) => {
         projects: _map(state.projects, res => ({
           ...res,
           live: data[res.id],
-        }))
+        })),
       }
     }
 
@@ -45,10 +41,10 @@ const projectsReducer = (state = getInitialState(), { type, payload }) => {
               ...res,
               live: count,
             }
-          } else {
-            return res
           }
-        })
+
+          return res
+        }),
       }
     }
 

@@ -12,9 +12,7 @@ const Input = ({
 
   return (
     <div className={className}>
-      <div className={cx({
-        'flex justify-between': label && hint,
-      })}>
+      <div className={cx({ 'flex justify-between': label && hint })}>
         <label htmlFor={identifier} className='block text-sm font-medium text-gray-700 dark:text-gray-200'>{label}</label>
       </div>
       <div className='mt-1 relative'>
@@ -23,17 +21,17 @@ const Input = ({
           value={value}
           name={name}
           id={identifier}
-          onChange={onChange}
           className={cx('shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md', {
             'border-red-300 text-red-900 placeholder-red-300': isError,
           })}
           placeholder={placeholder}
           aria-describedby={`${identifier}-optional`}
           disabled={disabled}
+          onChange={onChange}
         />
         {isError && (
           <div className='absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none'>
-            <ExclamationCircleIcon className='h-5 w-5 text-red-500' aria-hidden />
+            <ExclamationCircleIcon aria-hidden className='h-5 w-5 text-red-500' />
           </div>
         )}
       </div>
@@ -67,7 +65,7 @@ Input.defaultProps = {
   label: '',
   hint: '',
   placeholder: '',
-  onChange: () => { },
+  onChange: () => {},
   id: '',
   type: '',
   className: '',

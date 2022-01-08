@@ -10,7 +10,7 @@ export default function* initialise() {
     if (token) {
       yield put(UIActions.loadProjects())
     }
-  } catch (e) {
-    console.error(e)
+  } catch (error) {
+    console.error(error)
   }
 }

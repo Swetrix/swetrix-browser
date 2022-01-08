@@ -1,6 +1,6 @@
+/* eslint-disable react/prop-types, react/jsx-child-element-spacing */
 import React, { memo, useState, useMemo, Fragment } from 'react'
-import { ArrowSmUpIcon } from '@heroicons/react/solid'
-import { ArrowSmDownIcon } from '@heroicons/react/solid'
+import { ArrowSmUpIcon, ArrowSmDownIcon } from '@heroicons/react/solid'
 import cx from 'classnames'
 import PropTypes from 'prop-types'
 import _keys from 'lodash/keys'
@@ -25,7 +25,8 @@ const PanelContainer = ({
   <div className={cx('relative bg-white dark:bg-gray-750 pt-2 px-4 min-h-72 shadow rounded-lg overflow-hidden', {
     'pb-2': isOverview,
     'pb-8': !isOverview,
-  })}>
+  })}
+  >
     <h3 className='text-lg leading-6 font-semibold mb-2 text-gray-900 dark:text-gray-50'>{name}</h3>
     <div className='flex flex-col h-full scroll-auto'>
       {children}
@@ -36,6 +37,11 @@ const PanelContainer = ({
 PanelContainer.propTypes = {
   name: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
+  isOverview: PropTypes.bool,
+}
+
+PanelContainer.propTypes = {
+  isOverview: false,
 }
 
 const Overview = ({
@@ -47,7 +53,7 @@ const Overview = ({
   const uniques = _sum(chartData?.uniques) || 0
 
   return (
-    <PanelContainer name='Overview' isOverview>
+    <PanelContainer isOverview name='Overview'>
       <div className='flex text-lg justify-between'>
         <div className='flex items-center dark:text-gray-50'>
           <PulsatingCircle className='mr-1.5' type='big' />
@@ -61,7 +67,10 @@ const Overview = ({
         <>
           <p className='text-lg font-semibold dark:text-gray-50'>
             Stats for
-            <span className='lowercase'> {activePeriod.label}</span>
+            <span className='lowercase'>
+              &nbsp;
+              {activePeriod.label}
+            </span>
           </p>
 
           <div className='flex justify-between'>
@@ -98,7 +107,8 @@ const Overview = ({
           <p className={cx('flex text-sm -ml-1 items-baseline', {
             'text-green-600': pageviewsDidGrowUp,
             'text-red-600': !pageviewsDidGrowUp,
-          })}>
+          })}
+          >
             {pageviewsDidGrowUp ? (
               <>
                 <ArrowSmUpIcon className='self-center flex-shrink-0 h-4 w-4 text-green-500' />
@@ -129,7 +139,8 @@ const Overview = ({
           <p className={cx('flex text-sm -ml-1 items-baseline', {
             'text-green-600': uniqueDidGrowUp,
             'text-red-600': !uniqueDidGrowUp,
-          })}>
+          })}
+          >
             {uniqueDidGrowUp ? (
               <>
                 <ArrowSmUpIcon className='self-center flex-shrink-0 h-4 w-4 text-green-500' />
@@ -145,7 +156,8 @@ const Overview = ({
                 </span>
               </>
             )}
-            {overall.percChangeUnique}%
+            {overall.percChangeUnique}
+            %
           </p>
         </dd>
       </div>
@@ -185,6 +197,7 @@ const CustomEvents = ({
 
 CustomEvents.propTypes = {
   customs: PropTypes.objectOf(PropTypes.number).isRequired,
+  chartData: PropTypes.object.isRequired,
 }
 
 const Panel = ({

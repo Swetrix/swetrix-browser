@@ -9,7 +9,7 @@ import { login } from '../../../../api'
 
 export default function* singinWorker({ payload: { credentials, callback } }) {
   try {
-    const { access_token, user } = yield call(login, credentials)
+    const { access_token, user } = yield call(login, credentials) // eslint-disable-line
 
     yield put(authActions.loginSuccess(user))
     yield call(setAccessToken, access_token)

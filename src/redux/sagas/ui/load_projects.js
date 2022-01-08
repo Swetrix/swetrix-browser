@@ -25,6 +25,7 @@ export default function* loadProjects() {
     if (_isString(message)) {
       yield put(UIActions.setProjectsError(message))
     }
+
     console.error(message)
   }
 }

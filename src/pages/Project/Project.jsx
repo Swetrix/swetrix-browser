@@ -16,15 +16,15 @@ import _find from 'lodash/find'
 import {
   periodPairs, getProjectCacheKey, LIVE_VISITORS_UPDATE_INTERVAL,
 } from '../../redux/constants'
-import Loader from '../../ui/Loader'
-import Dropdown from '../../ui/Dropdown'
-import Loading from '../../components/Loading'
-import { Panel, Overview, CustomEvents } from './Panels'
-import { isAuthenticated } from '../../hoc/protected'
-import routes from '../../routes'
 import {
   getProjectData, getLiveVisitors,
 } from '../../api'
+import Loader from '../../ui/Loader'
+import Dropdown from '../../ui/Dropdown'
+import Loading from '../../components/Loading'
+import { isAuthenticated } from '../../hoc/protected'
+import routes from '../../routes'
+import { Panel, Overview, CustomEvents } from './Panels'
 
 countries.registerLocale(countriesEn)
 
@@ -62,7 +62,7 @@ const Project = ({
   const [analyticsLoading, setAnalyticsLoading] = useState(true)
   const [period, setPeriod] = useState(projectViewPrefs[id]?.period || periodPairs[0].period)
   const [timeBucket, setTimebucket] = useState(projectViewPrefs[id]?.timeBucket || periodPairs[0].tbs[1])
-  const activePeriod = useMemo(() => _find(periodPairs, p => p.period === period), [period, periodPairs])
+  const activePeriod = useMemo(() => _find(periodPairs, p => p.period === period), [period])
   const [chartData, setChartData] = useState({})
 
   const { name } = project
@@ -103,8 +103,8 @@ const Project = ({
         }
 
         setAnalyticsLoading(false)
-      } catch (e) {
-        console.error(e)
+      } catch (error) {
+        console.error(error)
       }
     }
   }
@@ -136,7 +136,9 @@ const Project = ({
   const updatePeriod = (newPeriod) => {
     const newPeriodFull = _find(periodPairs, (el) => el.period === newPeriod)
     let tb = timeBucket
-    if (_isEmpty(newPeriodFull)) return
+    if (_isEmpty(newPeriodFull)) {
+      return
+    }
 
     if (!_includes(newPeriodFull.tbs, timeBucket)) {
       tb = _last(newPeriodFull.tbs)
@@ -184,40 +186,49 @@ const Project = ({
             {_map(panelsData.types, type => {
               if (type === 'cc') {
                 return (
-                  <Panel key={type} name={tnMapping[type]} data={panelsData.data[type]} rowMapper={(name) => (
-                    <>
-                      <Flag className='rounded-md' country={name} size={21} alt='' />
-                      &nbsp;&nbsp;
-                      {countries.getName(name, 'en', {
-                        select: 'alias',
-                      })}
-                    </>
-                  )} />
+                  <Panel
+                    key={type}
+                    name={tnMapping[type]}
+                    data={panelsData.data[type]}
+                    rowMapper={(name) => (
+                      <>
+                        <Flag className='rounded-md' country={name} size={21} alt='' />
+                        &nbsp;&nbsp;
+                        {countries.getName(name, 'en', {
+                          select: 'alias',
+                        })}
+                      </>
+                    )}
+                  />
                 )
               }
 
               if (type === 'dv') {
                 return (
-                  <Panel key={type} name={tnMapping[type]} data={panelsData.data[type]} capitalize />
+                  <Panel key={type} capitalize name={tnMapping[type]} data={panelsData.data[type]} />
                 )
               }
 
               if (type === 'ref') {
                 return (
-                  <Panel key={type} name={tnMapping[type]} data={panelsData.data[type]} rowMapper={(name) => {
-                    const url = new URL(name)
+                  <Panel
+                    key={type}
+                    name={tnMapping[type]}
+                    data={panelsData.data[type]}
+                    rowMapper={(name) => {
+                      const url = new URL(name)
 
-                    return (
-                      <a className='flex label hover:underline text-blue-600' href={name} target='_blank' rel='noopener noreferrer'>
-                        {!_isEmpty(url.hostname) && (
-                          <img className='w-5 h-5 mr-1.5' src={`https://icons.duckduckgo.com/ip3/${url.hostname}.ico`} alt='' />
-                        )}
-                        {_truncate(name, {
-                          length: 25,
-                        })}
-                      </a>
-                    )
-                  }}
+                      return (
+                        <a className='flex label hover:underline text-blue-600' href={name} target='_blank' rel='noopener noreferrer'>
+                          {!_isEmpty(url.hostname) && (
+                            <img className='w-5 h-5 mr-1.5' src={`https://icons.duckduckgo.com/ip3/${url.hostname}.ico`} alt='' />
+                          )}
+                          {_truncate(name, {
+                            length: 25,
+                          })}
+                        </a>
+                      )
+                    }}
                   />
                 )
               }

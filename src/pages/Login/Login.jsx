@@ -1,4 +1,5 @@
 import React, { useState, memo } from 'react'
+import PropTypes from 'prop-types'
 
 import { notAuthenticated } from '../../hoc/protected'
 
@@ -19,7 +20,7 @@ const Login = ({ login }) => {
     }))
   }
 
-  async function onSubmit (e) {
+  async function onSubmit(e) {
     e.preventDefault()
 
     if (!isLoading) {
@@ -85,12 +86,16 @@ const Login = ({ login }) => {
         >
           Sign in
         </button>
-        <a className='underline text-blue-600 hover:text-indigo-800 text-md' href='https://swetrix.com/signup' target='_blank'>
+        <a className='underline text-blue-600 hover:text-indigo-800 text-md' href='https://swetrix.com/signup' target='_blank' rel='noreferrer noopener'>
           Sign up instead
         </a>
       </div>
     </form>
   )
+}
+
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
 }
 
 export default notAuthenticated(memo(Login))

@@ -5,7 +5,7 @@ import { removeAccessToken } from '../../../../utils'
 export default function* logoutWorker() {
   try {
     yield call(removeAccessToken)
-  } catch (e) {
-    console.error('[LOGOUT SAGA]', e)
+  } catch (error) {
+    console.error('[LOGOUT SAGA]', error)
   }
 }

@@ -28,7 +28,7 @@ export const authActions = {
   },
 
   // Asynchronous
-  loginAsync(credentials, callback = () => { }) {
+  loginAsync(credentials, callback = () => {}) {
     return {
       type: types.LOGIN_ASYNC,
       payload: {

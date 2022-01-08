@@ -18,7 +18,7 @@ const mapDispatchToProps = (dispatch) => ({
   },
   setLiveStatsForProject: (id, count) => {
     dispatch(UIActions.setLiveStatsForProject(id, count))
-  }
+  },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Project)

@@ -2,7 +2,7 @@ import { types } from '../actions/alerts/types'
 
 const initialState = {
   message: null,
-  type: 'info'
+  type: 'info',
 }
 
 const alertsReducer = (state = initialState, { type, payload }) => {

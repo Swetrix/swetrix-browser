@@ -5,7 +5,7 @@ import _map from 'lodash/map'
 import { getAccessToken, removeAccessToken } from './utils'
 
 const api = axios.create({
-  baseURL: 'https://api.swetrix.com/'
+  baseURL: 'https://api.swetrix.com/',
 })
 
 api.interceptors.request.use(
@@ -14,18 +14,17 @@ api.interceptors.request.use(
 
     try {
       token = await getAccessToken()
-    } catch (e) {
-      console.error('[API REQUEST INTERCEPTOR]', e)
+    } catch (error) {
+      console.error('[API REQUEST INTERCEPTOR]', error)
     }
 
     if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`
+      config.headers.Authorization = `Bearer ${token}`
     }
+
     return config
   },
-  (error) => {
-    return Promise.reject(error)
-  }
+  (error) => Promise.reject(error),
 )
 
 api.interceptors.response.use(
@@ -34,12 +33,13 @@ api.interceptors.response.use(
     if (error.response?.data.statusCode === 401) {
       try {
         await removeAccessToken()
-      } catch (e) {
-        console.error('[API RESPONSE INTERCEPTOR]', e)
+      } catch (error) {
+        console.error('[API RESPONSE INTERCEPTOR]', error)
       }
     }
+
     return Promise.reject(error)
-  }
+  },
 )
 
 export const authMe = () =>
@@ -67,15 +67,15 @@ export const getProjectData = (
   tb = 'hour',
   period = '3d',
   from = '',
-  to = ''
+  to = '',
 ) =>
   api
     .get(
-      `log?pid=${pid}&timeBucket=${tb}&period=${period}&from=${from}&to=${to}`
+      `log?pid=${pid}&timeBucket=${tb}&period=${period}&from=${from}&to=${to}`,
     )
     .then((response) => response.data)
     .catch((error) => {
-      debug('%s', error)
+      console.error('[API RESPONSE CATCH][getProjectData]', error)
       throw _isEmpty(error.response.data?.message)
         ? error.response.data
         : error.response.data.message
@@ -86,7 +86,7 @@ export const getProjects = () =>
     .get('/project')
     .then((response) => response.data)
     .catch((error) => {
-      debug('%s', error)
+      console.error('[API RESPONSE CATCH][getProjects]', error)
       throw _isEmpty(error.response.data?.message)
         ? error.response.data
         : error.response.data.message
@@ -97,7 +97,7 @@ export const getOverallStats = (pids) =>
     .get(`log/birdseye?pids=[${_map(pids, (pid) => `"${pid}"`).join(',')}]`)
     .then((response) => response.data)
     .catch((error) => {
-      debug('%s', error)
+      console.error('[API RESPONSE CATCH][getOverallStats]', error)
       throw _isEmpty(error.response.data?.message)
         ? error.response.data
         : error.response.data.message
@@ -108,7 +108,7 @@ export const getLiveVisitors = (pids) =>
     .get(`log/hb?pids=[${_map(pids, (pid) => `"${pid}"`).join(',')}]`)
     .then((response) => response.data)
     .catch((error) => {
-      debug('%s', error)
+      console.error('[API RESPONSE CATCH][getLiveVisitors]', error)
       throw _isEmpty(error.response.data?.message)
         ? error.response.data
         : error.response.data.message

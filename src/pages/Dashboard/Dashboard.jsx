@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
 import cx from 'classnames'
@@ -6,10 +7,9 @@ import _isEmpty from 'lodash/isEmpty'
 import _isNumber from 'lodash/isNumber'
 import _map from 'lodash/map'
 import _filter from 'lodash/filter'
-import { EyeIcon } from '@heroicons/react/outline'
-import { CalendarIcon } from '@heroicons/react/outline'
-import { ArrowSmUpIcon } from '@heroicons/react/solid'
-import { ArrowSmDownIcon } from '@heroicons/react/solid'
+import { EyeIcon, CalendarIcon } from '@heroicons/react/outline'
+import { ArrowSmUpIcon, ArrowSmDownIcon } from '@heroicons/react/solid'
+import PropTypes from 'prop-types'
 
 import { ActivePin, InactivePin } from '../../ui/Pin'
 import PulsatingCircle from '../../ui/icons/PulsatingCircle'
@@ -54,7 +54,8 @@ const ProjectCart = ({
                   <p className={cx('flex text-xs -ml-1 items-baseline', {
                     'text-green-600': statsDidGrowUp,
                     'text-red-600': !statsDidGrowUp,
-                  })}>
+                  })}
+                  >
                     {statsDidGrowUp ? (
                       <>
                         <ArrowSmUpIcon className='self-center flex-shrink-0 h-4 w-4 text-green-500' />
@@ -119,7 +120,6 @@ const Wrapper = ({ children }) => (
 )
 
 const Dashboard = ({ projects, isLoading }) => {
-  console.log(projects, isLoading)
   if (!isLoading) {
     return (
       <Wrapper>
@@ -152,6 +152,11 @@ const Dashboard = ({ projects, isLoading }) => {
       <Loading />
     </Wrapper>
   )
+}
+
+Dashboard.propTypes = {
+  projects: PropTypes.arrayOf(PropTypes.object).isRequired,
+  isLoading: PropTypes.bool.isRequired,
 }
 
 export default isAuthenticated(memo(Dashboard))
