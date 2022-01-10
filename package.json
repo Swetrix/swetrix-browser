@@ -2,13 +2,12 @@
   "private": true,
   "scripts": {
     "prebuild": "rm -rf dist .cache .parcel-cache",
-    "build:tailwind": "tailwindcss build -i src/styles.css -c ./tailwind.config.js -o distribution/styles.css",
-    "build": "parcel build manifest.json --no-content-hash --no-source-maps --dist-dir distribution --no-cache --detailed-report 0 && npm run build:tailwind",
-    "lint": "run-p lint:*",
+    "fix-assets": "mkdir -p distribution && rm -rf distribution/assets && cp -r assets distribution/assets",
+    "build": "parcel build manifest.json --no-content-hash --no-source-maps --dist-dir distribution --no-cache --detailed-report 0 && npm run fix-assets",
     "lint-fix": "run-p 'lint:* -- --fix'",
     "lint:js": "xo",
     "test": "run-p lint:* build",
-    "watch": "npm run build:tailwind && parcel watch manifest.json --dist-dir distribution --no-cache --no-hmr"
+    "watch": "npm run fix-assets && parcel watch manifest.json --dist-dir distribution --no-cache --no-hmr"
   },
   "browserslist": [
     "last 1 Chrome version",

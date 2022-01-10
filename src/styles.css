@@ -2,13 +2,12 @@
 @import "tailwindcss/utilities";
 
 html {
-  min-width: 370px;
   background-color: #f9fafb;
   overflow-x: hidden; /* Required to hide horizontal scroll on Firefox */
 }
 
 body {
+  min-width: 370px;
   height: 320px;
   overflow: auto;
-  scrollbar-width: thin;
 }
