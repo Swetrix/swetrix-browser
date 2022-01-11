@@ -5,7 +5,7 @@
   "homepage_url": "https://swetrix.com",
   "manifest_version": 2,
   "minimum_chrome_version": "74",
-  "applications": {
+  "browser_specific_settings": {
     "gecko": {
       "id": "extension@swetrix.com",
       "strict_min_version": "67.0"
