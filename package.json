@@ -34,31 +34,46 @@
       "import/extensions": "off",
       "node/file-extension-in-import": "off",
       "object-curly-spacing": "off",
-      "generator-star-spacing": ["error", {
-        "before": false,
-        "after": true,
-        "anonymous": "neither",
-        "method": {
-          "before": true,
-          "after": true
+      "generator-star-spacing": [
+        "error",
+        {
+          "before": false,
+          "after": true,
+          "anonymous": "neither",
+          "method": {
+            "before": true,
+            "after": true
+          }
         }
-      }],
+      ],
       "unicorn/numeric-separators-style": "off",
-      "react/jsx-tag-spacing": ["error", {
-        "beforeSelfClosing": "always"
-      }],
-      "jsx-quotes": ["error", "prefer-single"],
+      "react/jsx-tag-spacing": [
+        "error",
+        {
+          "beforeSelfClosing": "always"
+        }
+      ],
+      "jsx-quotes": [
+        "error",
+        "prefer-single"
+      ],
       "arrow-parens": "off",
       "unicorn/prevent-abbreviations": "off",
       "default-param-last": "off",
       "unicorn/no-abusive-eslint-disable": "off",
       "react/boolean-prop-naming": "off",
-      "react/jsx-no-bind": ["error", {
-        "allowArrowFunctions": true,
-        "allowFunctions": true
-      }],
+      "react/jsx-no-bind": [
+        "error",
+        {
+          "allowArrowFunctions": true,
+          "allowFunctions": true
+        }
+      ],
       "react/button-has-type": "off",
-      "max-params": ["error", 5]
+      "max-params": [
+        "error",
+        5
+      ]
     }
   },
   "dependencies": {
@@ -87,14 +102,14 @@
   },
   "devDependencies": {
     "@babel/core": "^7.16.7",
-    "@parcel/config-webextension": "^2.1.0",
-    "@parcel/transformer-image": "^2.1.0",
-    "autoprefixer": "^10.4.1",
+    "@parcel/config-webextension": "^2.1.1",
+    "@parcel/transformer-image": "^2.1.1",
+    "autoprefixer": "^10.4.2",
     "eslint-config-xo-react": "^0.25.0",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "npm-run-all": "^4.1.5",
-    "parcel": "^2.1.0",
+    "parcel": "^2.1.1",
     "postcss-import": "^14.0.2",
     "xo": "^0.44.0"
   },
