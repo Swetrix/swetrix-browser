@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types, react/jsx-child-element-spacing */
 import React, { memo, useState, useMemo, Fragment } from 'react'
 import { ArrowSmUpIcon, ArrowSmDownIcon } from '@heroicons/react/solid'
-import cx from 'classnames'
+import cx from 'clsx'
 import PropTypes from 'prop-types'
 import _keys from 'lodash/keys'
 import _map from 'lodash/map'

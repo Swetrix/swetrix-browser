@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { memo } from 'react'
 import { Link } from 'react-router-dom'
-import cx from 'classnames'
+import cx from 'clsx'
 import dayjs from 'dayjs'
 import _isEmpty from 'lodash/isEmpty'
 import _isNumber from 'lodash/isNumber'
