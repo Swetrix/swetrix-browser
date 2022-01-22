@@ -62,6 +62,7 @@
       "default-param-last": "off",
       "unicorn/no-abusive-eslint-disable": "off",
       "react/boolean-prop-naming": "off",
+      "unicorn/prefer-export-from": "off",
       "react/jsx-no-bind": [
         "error",
         {
