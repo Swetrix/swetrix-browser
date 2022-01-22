@@ -7,7 +7,7 @@ html {
 }
 
 body {
-  min-width: 370px;
-  height: 320px;
+  min-width: 480px;
+  height: 420px;
   overflow: auto;
 }
