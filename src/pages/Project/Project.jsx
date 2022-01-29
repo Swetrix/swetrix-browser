@@ -114,20 +114,6 @@ const Project = ({
   }, [project, period, timeBucket]) // eslint-disable-line
 
   useEffect(() => {
-    let interval
-    if (project.uiHidden) {
-      interval = setInterval(async () => {
-        const { id } = project
-        const result = await getLiveVisitors([id])
-
-        setLiveStatsForProject(id, result[id])
-      }, LIVE_VISITORS_UPDATE_INTERVAL)
-    }
-
-    return () => clearInterval(interval)
-  }, [project, setLiveStatsForProject])
-
-  useEffect(() => {
     if (!isLoading && _isEmpty(project)) {
       onErrorLoading()
     }

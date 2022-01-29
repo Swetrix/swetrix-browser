@@ -1,6 +1,5 @@
 import { put, call, delay, select } from 'redux-saga/effects'
 import _map from 'lodash/map'
-import _filter from 'lodash/filter'
 import _isEmpty from 'lodash/isEmpty'
 
 import { getLiveVisitors } from '../../../api'
@@ -15,7 +14,7 @@ export default function* liveVisitors() {
       continue
     }
 
-    const pids = _map(_filter(projects, ({ uiHidden }) => !uiHidden), project => project.id)
+    const pids = _map(projects, project => project.id)
     const liveStats = yield call(getLiveVisitors, pids)
 
     yield put(UIActions.setLiveStats(liveStats))

@@ -6,7 +6,6 @@ import dayjs from 'dayjs'
 import _isEmpty from 'lodash/isEmpty'
 import _isNumber from 'lodash/isNumber'
 import _map from 'lodash/map'
-import _filter from 'lodash/filter'
 import { EyeIcon, CalendarIcon } from '@heroicons/react/outline'
 import { ArrowSmUpIcon, ArrowSmDownIcon } from '@heroicons/react/solid'
 import PropTypes from 'prop-types'
@@ -128,7 +127,7 @@ const Dashboard = ({ projects, isLoading }) => {
         ) : (
           <div className='bg-white shadow overflow-hidden sm:rounded-md mt-2'>
             <ul className='divide-y divide-gray-200'>
-              {_map(_filter(projects, ({ uiHidden }) => !uiHidden), ({ name, id, created, active, overall, live, public: isPublic }) => (
+              {_map(projects, ({ name, id, created, active, overall, live, public: isPublic }) => (
                 <ProjectCart
                   key={id}
                   name={name}
