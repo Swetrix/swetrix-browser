@@ -67,8 +67,6 @@ const Project = ({
 
   const { name } = project
 
-  console.log(projects, cache, projectViewPrefs)
-
   const onErrorLoading = () => {
     history.push(routes.dashboard)
   }
@@ -174,6 +172,7 @@ const Project = ({
                 return (
                   <Panel
                     key={type}
+                    type={type}
                     name={tnMapping[type]}
                     data={panelsData.data[type]}
                     rowMapper={(name) => (

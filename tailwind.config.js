@@ -1,7 +1,7 @@
 module.exports = {
-  jit: true,
+  mode: 'jit',
+  important: true,
   purge: ['./src/**/*.{js,jsx,ts,tsx,html}'],
-  content: [],
   theme: {
     extend: {
       width: {
@@ -12,5 +12,4 @@ module.exports = {
       72: '14rem',
     },
   },
-  plugins: [],
 }

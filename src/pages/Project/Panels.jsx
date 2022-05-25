@@ -1,6 +1,9 @@
 /* eslint-disable react/prop-types, react/jsx-child-element-spacing */
 import React, { memo, useState, useMemo, Fragment } from 'react'
-import { ArrowSmUpIcon, ArrowSmDownIcon } from '@heroicons/react/solid'
+import { ArrowSmUpIcon, ArrowSmDownIcon, } from '@heroicons/react/solid'
+import {
+  MapIcon, ViewListIcon,
+} from '@heroicons/react/outline'
 import cx from 'clsx'
 import PropTypes from 'prop-types'
 import _keys from 'lodash/keys'
@@ -14,20 +17,44 @@ import _size from 'lodash/size'
 import _slice from 'lodash/slice'
 import _sum from 'lodash/sum'
 
+import InteractiveMap from './InteractiveMap'
 import Progress from '../../ui/Progress'
 import PulsatingCircle from '../../ui/icons/PulsatingCircle'
 
 const ENTRIES_PER_PANEL = 5
+const iconClassName = 'w-6 h-6'
 
 const PanelContainer = ({
-  name, children, isOverview,
+  name, type, children, isOverview, activeFragment, setActiveFragment
 }) => (
   <div className={cx('relative bg-white dark:bg-gray-750 pt-2 px-4 min-h-72 shadow rounded-lg overflow-hidden', {
     'pb-2': isOverview,
     'pb-8': !isOverview,
   })}
   >
-    <h3 className='text-lg leading-6 font-semibold mb-2 text-gray-900 dark:text-gray-50'>{name}</h3>
+    <div className='flex items-center justify-between mb-2'>
+      <h3 className='flex items-center text-lg leading-6 font-semibold text-gray-900 dark:text-gray-50'>
+        {name}
+      </h3>
+      {type === 'cc' && (
+        <div className='flex'>
+          <ViewListIcon
+            className={cx(iconClassName, 'cursor-pointer', {
+              'text-blue-500': activeFragment === 0,
+              'text-gray-900 dark:text-gray-50': activeFragment === 1,
+            })}
+            onClick={() => setActiveFragment(0)}
+          />
+          <MapIcon
+            className={cx(iconClassName, 'ml-2 cursor-pointer', {
+              'text-blue-500': activeFragment === 1,
+              'text-gray-900 dark:text-gray-50': activeFragment === 0,
+            })}
+            onClick={() => setActiveFragment(1)}
+          />
+        </div>
+      )}
+    </div>
     <div className='flex flex-col h-full scroll-auto'>
       {children}
     </div>
@@ -38,10 +65,14 @@ PanelContainer.propTypes = {
   name: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
   isOverview: PropTypes.bool,
+  activeFragment: PropTypes.number,
+  setActiveFragment: PropTypes.func,
 }
 
 PanelContainer.propTypes = {
   isOverview: false,
+  activeFragment: 0,
+  setActiveFragment: () => { },
 }
 
 const Overview = ({
@@ -201,14 +232,14 @@ CustomEvents.propTypes = {
 }
 
 const Panel = ({
-  name, data, rowMapper, capitalize, linkContent,
+  name, data, rowMapper, capitalize, linkContent, type
 }) => {
   const [page, setPage] = useState(0)
   const currentIndex = page * ENTRIES_PER_PANEL
   const keys = useMemo(() => _keys(data).sort((a, b) => data[b] - data[a]), [data])
   const keysToDisplay = useMemo(() => _slice(keys, currentIndex, currentIndex + 5), [keys, currentIndex])
   const total = useMemo(() => _reduce(keys, (prev, curr) => prev + data[curr], 0), [keys]) // eslint-disable-line
-
+  const [activeFragment, setActiveFragment] = useState(0)
   const canGoPrev = () => page > 0
   const canGoNext = () => page < _floor(_size(keys) / ENTRIES_PER_PANEL)
 
@@ -224,8 +255,24 @@ const Panel = ({
     }
   }
 
+  if (type === 'cc' && activeFragment === 1 && !_isEmpty(data)) {
+    return (
+      <PanelContainer
+        name={name}
+        type={type}
+        activeFragment={activeFragment}
+        setActiveFragment={setActiveFragment}
+      >
+        <InteractiveMap
+          data={data}
+          total={total}
+        />
+      </PanelContainer>
+    )
+  }
+
   return (
-    <PanelContainer name={name}>
+    <PanelContainer name={name} type={type} activeFragment={activeFragment} setActiveFragment={setActiveFragment}>
       {_isEmpty(data) ? (
         <p className='mt-1 text-base text-gray-700 dark:text-gray-300'>
           No data for this parameter yet
