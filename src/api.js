@@ -66,12 +66,13 @@ export const getProjectData = (
   pid,
   tb = 'hour',
   period = '3d',
+  filters = [],
   from = '',
   to = '',
 ) =>
   api
     .get(
-      `log?pid=${pid}&timeBucket=${tb}&period=${period}&from=${from}&to=${to}`,
+      `log?pid=${pid}&timeBucket=${tb}&period=${period}&filters=${JSON.stringify(filters)}&from=${from}&to=${to}`,
     )
     .then((response) => response.data)
     .catch((error) => {
