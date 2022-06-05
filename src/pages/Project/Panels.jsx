@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types, react/jsx-child-element-spacing */
 import React, { memo, useState, useMemo, Fragment } from 'react'
-import { ArrowSmUpIcon, ArrowSmDownIcon, } from '@heroicons/react/solid'
 import {
   MapIcon, ViewListIcon,
 } from '@heroicons/react/outline'
+import { ArrowSmUpIcon, ArrowSmDownIcon, FilterIcon } from '@heroicons/react/solid'
 import cx from 'clsx'
 import PropTypes from 'prop-types'
 import _keys from 'lodash/keys'
@@ -232,7 +232,7 @@ CustomEvents.propTypes = {
 }
 
 const Panel = ({
-  name, data, rowMapper, capitalize, linkContent, type
+  name, data, rowMapper, capitalize, linkContent, hideFilters, onFilter, type,
 }) => {
   const [page, setPage] = useState(0)
   const currentIndex = page * ENTRIES_PER_PANEL
@@ -243,6 +243,8 @@ const Panel = ({
   const canGoPrev = () => page > 0
   const canGoNext = () => page < _floor(_size(keys) / ENTRIES_PER_PANEL)
 
+  const _onFilter = hideFilters ? () => { } : onFilter
+  
   const onPrevious = () => {
     if (canGoPrev()) {
       setPage(page - 1)
@@ -283,14 +285,25 @@ const Panel = ({
 
         return (
           <Fragment key={key}>
-            <div className='flex text-base justify-between mt-1 dark:text-gray-50'>
+            <div
+              className={cx('flex text-base justify-between mt-1 dark:text-gray-50 rounded', {
+                'group hover:bg-gray-100 hover:dark:bg-gray-700 cursor-pointer': !hideFilters,
+              })}
+              onClick={() => _onFilter(type, key)}
+            >
               {linkContent ? (
                 <a className={cx('flex label hover:underline text-blue-600 dark:text-blue-500', { capitalize })} href={rowData} target='_blank' rel='noopener noreferrer'>
                   {rowData}
+                  {!hideFilters && (
+                    <FilterIcon className='ml-2 w-4 text-gray-500 hidden group-hover:block dark:text-gray-300' />
+                  )}
                 </a>
               ) : (
                 <span className={cx('flex label', { capitalize })}>
                   {rowData}
+                  {!hideFilters && (
+                    <FilterIcon className='ml-2 w-4 text-gray-500 hidden group-hover:block dark:text-gray-300' />
+                  )}
                 </span>
               )}
               <span className='ml-3 dark:text-gray-50'>
@@ -343,12 +356,18 @@ Panel.propTypes = {
   rowMapper: PropTypes.func,
   capitalize: PropTypes.bool,
   linkContent: PropTypes.bool,
+  hideFilters: PropTypes.bool,
+  onFilter: PropTypes.func,
+  type: PropTypes.string,
 }
 
 Panel.defaultProps = {
   rowMapper: null,
+  type: null,
   capitalize: false,
   linkContent: false,
+  onFilter: () => { },
+  hideFilters: false,
 }
 
 const PanelMemo = memo(Panel)

@@ -92,6 +92,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-flagkit": "^2.0.4",
+    "react-flatpickr": "^3.10.12",
     "react-redux": "^7.2.6",
     "react-router-dom": "^5.3.0",
     "react-toastify": "^8.2.0",

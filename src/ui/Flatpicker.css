@@ -1,0 +1,8 @@
+.flatpicker-custom .flatpickr-calendar.static {
+  position: absolute !important;
+}
+
+.flatpicker-custom .flatpickr-calendar.static.open {
+  left: -210px;
+  top: 30px;
+}
