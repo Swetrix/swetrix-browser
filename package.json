@@ -92,6 +92,7 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-flagkit": "^2.0.4",
+    "react-flatpickr": "^3.10.12",
     "react-redux": "^7.2.6",
     "react-router-dom": "^5.3.0",
     "redux": "^4.1.2",
@@ -112,6 +113,9 @@
     "npm-run-all": "^4.1.5",
     "parcel": "^2.2.1",
     "postcss-import": "^14.0.2",
+    "process": "^0.11.10",
+    "querystring-es3": "^0.2.1",
+    "url": "^0.11.0",
     "xo": "^0.47.0"
   },
   "webExt": {

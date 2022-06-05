@@ -29,13 +29,17 @@ const cacheReducer = (state = initialState, { type, payload }) => {
     }
 
     case types.SET_PROJECT_VIEW_PREFS: {
-      const { pid, period, timeBucket } = payload
+      const {
+        pid, period, timeBucket, rangeDate,
+      } = payload
 
       return {
         ...state,
         projectViewPrefs: {
           ...state.projectViewPrefs,
-          [pid]: {
+          [pid]: rangeDate ? {
+            period, timeBucket, rangeDate,
+          } : {
             period, timeBucket,
           },
         },
