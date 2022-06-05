@@ -70,7 +70,7 @@ const Filter = ({
       {displayColumn}
       &nbsp;
       <span className='text-blue-400 border-blue-400 border-b-2 border-dotted cursor-pointer' onClick={() => onChangeExclusive(column, filter, !isExclusive)}>
-        {isExclusive ? 'is Not' : 'is'}
+        {isExclusive ? 'is not' : 'is'}
       </span>
       &nbsp;
       &quot;
