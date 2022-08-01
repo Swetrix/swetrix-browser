@@ -17,10 +17,10 @@ import _filter from 'lodash/filter'
 import FlatPicker from '../../ui/Flatpicker'
 
 import {
-  tbPeriodPairs, getProjectCacheKey, getProjectCacheCustomKey, timeBucketToDays
+  tbPeriodPairs, getProjectCacheKey, getProjectCacheCustomKey, timeBucketToDays,
 } from '../../redux/constants'
 import {
-  getProjectData, getLiveVisitors,
+  getProjectData,
 } from '../../api'
 import Loader from '../../ui/Loader'
 import Dropdown from '../../ui/Dropdown'
@@ -49,8 +49,14 @@ const getFormatDate = (date) => {
   const yyyy = date.getFullYear()
   let mm = date.getMonth() + 1
   let dd = date.getDate()
-  if (dd < 10) dd = `0${dd}`
-  if (mm < 10) mm = `0${mm}`
+  if (dd < 10) {
+    dd = `0${dd}`
+  }
+
+  if (mm < 10) {
+    mm = `0${mm}`
+  }
+
   return `${yyyy}-${mm}-${dd}`
 }
 
@@ -65,7 +71,7 @@ const NoEvents = () => (
 )
 
 const Filter = ({
-  column, filter, isExclusive, onRemoveFilter, onChangeExclusive, tnMapping
+  column, filter, isExclusive, onRemoveFilter, onChangeExclusive, tnMapping,
 }) => {
   const displayColumn = tnMapping[column]
   let displayFilter = filter
@@ -88,9 +94,9 @@ const Filter = ({
       {displayFilter}
       &quot;
       <button
-        onClick={() => onRemoveFilter(column, filter)}
         type='button'
         className='flex-shrink-0 ml-0.5 h-4 w-4 rounded-full inline-flex items-center justify-center text-gray-800 hover:text-gray-900 hover:bg-gray-300 focus:bg-gray-300 focus:text-gray-900 dark:text-gray-50 dark:bg-gray-700 dark:hover:text-gray-300 dark:hover:bg-gray-800 dark:focus:bg-gray-800 dark:focus:text-gray-300 focus:outline-none '
+        onClick={() => onRemoveFilter(column, filter)}
       >
         <span className='sr-only'>Remove filter</span>
         <svg className='h-2 w-2' stroke='currentColor' fill='none' viewBox='0 0 8 8'>
@@ -101,23 +107,43 @@ const Filter = ({
   )
 }
 
+Filter.propTypes = {
+  column: PropTypes.string.isRequired,
+  filter: PropTypes.string.isRequired,
+  isExclusive: PropTypes.bool.isRequired,
+  onRemoveFilter: PropTypes.func.isRequired,
+  onChangeExclusive: PropTypes.func.isRequired,
+  tnMapping: PropTypes.object.isRequired,
+}
+
 const Filters = ({
   filters, onRemoveFilter, onChangeExclusive, tnMapping,
 }) => (
   <div className='flex justify-center md:justify-start flex-wrap -mt-2'>
-    {_map(filters, (props) => {
-      const { column, filter } = props
+    {_map(filters, (item) => {
+      const { column, filter } = item
       const key = `${column}${filter}`
 
       return (
-        <Filter key={key} onRemoveFilter={onRemoveFilter} onChangeExclusive={onChangeExclusive} tnMapping={tnMapping} {...props} />
+        <Filter key={key} tnMapping={tnMapping} onRemoveFilter={onRemoveFilter} onChangeExclusive={onChangeExclusive} {...item} />
       )
     })}
   </div>
 )
 
+Filters.propTypes = {
+  filters: PropTypes.arrayOf(PropTypes.shape({
+    column: PropTypes.string.isRequired,
+    filter: PropTypes.string.isRequired,
+    isExclusive: PropTypes.bool.isRequired,
+  })).isRequired,
+  onRemoveFilter: PropTypes.func.isRequired,
+  onChangeExclusive: PropTypes.func.isRequired,
+  tnMapping: PropTypes.object.isRequired,
+}
+
 const Project = ({
-  projects, isLoading, cache, setProjectCache, projectViewPrefs, setProjectViewPrefs, setLiveStatsForProject,
+  projects, isLoading, cache, setProjectCache, projectViewPrefs, setProjectViewPrefs,
 }) => {
   const { id } = useParams()
   const history = useHistory()
@@ -160,11 +186,7 @@ const Project = ({
         if (!forced && !_isEmpty(cache[id]) && !_isEmpty(cache[id][key])) {
           data = cache[id][key]
         } else {
-          if (rangeDate) {
-            data = await getProjectData(id, timeBucket, '', newFilters || filters, from, to)
-          } else {
-            data = await getProjectData(id, timeBucket, period, newFilters || filters, '', '')
-          }
+          data = await (rangeDate ? getProjectData(id, timeBucket, '', newFilters || filters, from, to) : getProjectData(id, timeBucket, period, newFilters || filters, '', ''))
 
           // TODO: VALIDATE IF IT'S WORKING CORRECTLY !!!!!!
           setProjectCache(id, data || {}, key)
@@ -177,7 +199,7 @@ const Project = ({
         }
 
         const { chart, params, customs } = data
-
+        // eslint-disable-next-line
         if (!_isEmpty(params)) {
           setChartData(chart)
           setPanelsData({
@@ -235,7 +257,6 @@ const Project = ({
 
   useEffect(() => {
     loadAnalytics()
-    console.log('loadaana');
   }, [project, period, timeBucket, periodPairs]) // eslint-disable-line
 
   useEffect(() => {
@@ -245,12 +266,11 @@ const Project = ({
   }, [isLoading, project]) // eslint-disable-line
 
   useEffect(() => {
-    console.log('rangedate');
     if (rangeDate) {
       const days = Math.ceil(Math.abs(rangeDate[1].getTime() - rangeDate[0].getTime()) / (1000 * 3600 * 24))
 
       // setting allowed time buckets for the specified date range (period)
-      // eslint-disable-next-line no-restricted-syntax
+
       for (const index in timeBucketToDays) {
         if (timeBucketToDays[index].lt >= days) {
           setTimebucket(timeBucketToDays[index].tb[0])
@@ -261,12 +281,14 @@ const Project = ({
         }
       }
     }
-  }, [rangeDate])
+  }, [rangeDate]) // eslint-disable-line
 
   const updatePeriod = (newPeriod) => {
     const newPeriodFull = _find(periodPairs, (el) => el.period === newPeriod.period)
     let tb = timeBucket
-    if (_isEmpty(newPeriodFull)) return
+    if (_isEmpty(newPeriodFull)) {
+      return
+    }
 
     if (!_includes(newPeriodFull.tbs, timeBucket)) {
       tb = _last(newPeriodFull.tbs)
@@ -302,7 +324,7 @@ const Project = ({
                 }
               }}
             />
-            <FlatPicker ref={refCalendar} onChange={(date) => setRangeDate(date)} value={rangeDate} />
+            <FlatPicker ref={refCalendar} value={rangeDate} onChange={(date) => setRangeDate(date)} />
           </div>
         </div>
         {analyticsLoading && (
@@ -315,9 +337,9 @@ const Project = ({
           <div>
             <Filters
               filters={filters}
+              tnMapping={tnMapping}
               onRemoveFilter={filterHandler}
               onChangeExclusive={onChangeExclusive}
-              tnMapping={tnMapping}
             />
           </div>
           <div className='grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3'>
@@ -337,7 +359,6 @@ const Project = ({
                     type={type}
                     name={tnMapping[type]}
                     data={panelsData.data[type]}
-                    onFilter={filterHandler}
                     rowMapper={(name) => (
                       <>
                         <Flag className='rounded-md' country={name} size={21} alt='' />
@@ -347,13 +368,14 @@ const Project = ({
                         })}
                       </>
                     )}
+                    onFilter={filterHandler}
                   />
                 )
               }
 
               if (type === 'dv') {
                 return (
-                  <Panel key={type} type={type} capitalize onFilter={filterHandler} name={tnMapping[type]} data={panelsData.data[type]} />
+                  <Panel key={type} capitalize type={type} name={tnMapping[type]} data={panelsData.data[type]} onFilter={filterHandler} />
                 )
               }
 
@@ -364,13 +386,12 @@ const Project = ({
                     type={type}
                     name={tnMapping[type]}
                     data={panelsData.data[type]}
-                    onFilter={filterHandler}
                     rowMapper={(name) => {
                       const url = new URL(name)
 
                       return (
                         <div>
-                          {showIcons && !_isEmpty(url.hostname) && (
+                          {!_isEmpty(url.hostname) && (
                             <img className='w-5 h-5 mr-1.5 float-left' src={`https://icons.duckduckgo.com/ip3/${url.hostname}.ico`} alt='' />
                           )}
                           <a className='flex label overflow-visible hover:underline text-blue-600' href={name} target='_blank' rel='noopener noreferrer'>
@@ -379,12 +400,13 @@ const Project = ({
                         </div>
                       )
                     }}
+                    onFilter={filterHandler}
                   />
                 )
               }
 
               return (
-                <Panel key={type} type={type} onFilter={filterHandler} name={tnMapping[type]} data={panelsData.data[type]} />
+                <Panel key={type} type={type} name={tnMapping[type]} data={panelsData.data[type]} onFilter={filterHandler} />
               )
             })}
             {!_isEmpty(panelsData.customs) && (
@@ -408,7 +430,6 @@ Project.propTypes = {
   setProjectCache: PropTypes.func.isRequired,
   setProjectViewPrefs: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  setLiveStatsForProject: PropTypes.func.isRequired,
 }
 
 export default isAuthenticated(memo(Project))

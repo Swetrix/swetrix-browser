@@ -1,4 +1,3 @@
-/* eslint-disable react/no-unused-class-component-methods, class-methods-use-this */
 import React, { memo } from 'react'
 import Flatpickr from 'react-flatpickr'
 import _size from 'lodash/size'
@@ -8,12 +7,21 @@ import './Flatpicker.css'
 
 import('flatpickr/dist/themes/light.css')
 
-
 class FlatPicker extends React.Component {
   constructor(props) {
     super(props)
     this.setCustomDate = this.setCustomDate.bind(this)
     this.calendar = React.createRef(null)
+  }
+
+  static propTypes = {
+    value: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
+    onChange: PropTypes.func,
+  }
+
+  static defaultProps = {
+    value: [],
+    onChange: () => {},
   }
 
   setCustomDate(dates) {
@@ -36,6 +44,7 @@ class FlatPicker extends React.Component {
     if (date.getDate() !== d) {
       date.setDate(0)
     }
+
     return date
   }
 
@@ -45,6 +54,7 @@ class FlatPicker extends React.Component {
     return (
       <div className='h-0 flatpicker-custom'>
         <Flatpickr
+          ref={this.calendar}
           id='calendar'
           value={value}
           options={{
@@ -58,23 +68,12 @@ class FlatPicker extends React.Component {
             position: 'auto center',
             altInputClass: 'hidden',
           }}
-          ref={this.calendar}
           className='invisible'
           onChange={this.setCustomDate}
         />
       </div>
     )
   }
-}
-
-FlatPicker.propTypes = {
-  onChange: PropTypes.func,
-  value: PropTypes.arrayOf(PropTypes.instanceOf(Date)),
-}
-
-FlatPicker.defaultProps = {
-  onChange: () => { },
-  value: [],
 }
 
 export default memo(FlatPicker)

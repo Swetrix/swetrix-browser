@@ -17,15 +17,15 @@ import _size from 'lodash/size'
 import _slice from 'lodash/slice'
 import _sum from 'lodash/sum'
 
-import InteractiveMap from './InteractiveMap'
 import Progress from '../../ui/Progress'
 import PulsatingCircle from '../../ui/icons/PulsatingCircle'
+import InteractiveMap from './InteractiveMap'
 
 const ENTRIES_PER_PANEL = 5
 const iconClassName = 'w-6 h-6'
 
 const PanelContainer = ({
-  name, type, children, isOverview, activeFragment, setActiveFragment
+  name, type, children, isOverview, activeFragment, setActiveFragment,
 }) => (
   <div className={cx('relative bg-white dark:bg-gray-750 pt-2 px-4 min-h-72 shadow rounded-lg overflow-hidden', {
     'pb-2': isOverview,
@@ -72,7 +72,7 @@ PanelContainer.propTypes = {
 PanelContainer.propTypes = {
   isOverview: false,
   activeFragment: 0,
-  setActiveFragment: () => { },
+  setActiveFragment: () => {},
 }
 
 const Overview = ({
@@ -243,8 +243,8 @@ const Panel = ({
   const canGoPrev = () => page > 0
   const canGoNext = () => page < _floor(_size(keys) / ENTRIES_PER_PANEL)
 
-  const _onFilter = hideFilters ? () => { } : onFilter
-  
+  const _onFilter = hideFilters ? () => {} : onFilter
+
   const onPrevious = () => {
     if (canGoPrev()) {
       setPage(page - 1)
@@ -366,7 +366,7 @@ Panel.defaultProps = {
   type: null,
   capitalize: false,
   linkContent: false,
-  onFilter: () => { },
+  onFilter: () => {},
   hideFilters: false,
 }
 
