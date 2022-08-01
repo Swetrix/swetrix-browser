@@ -61,7 +61,7 @@ export const login = (credentials) =>
         ? error.response.data
         : error.response.data.message
     })
-
+/* eslint max-params: ["error", 6] */
 export const getProjectData = (
   pid,
   tb = 'hour',

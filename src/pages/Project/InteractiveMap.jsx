@@ -7,8 +7,8 @@ import countries from 'i18n-iso-countries'
 import countriesEn from 'i18n-iso-countries/langs/en.json'
 
 import countriesList from '../../utils/countries'
-countries.registerLocale(countriesEn)
 
+countries.registerLocale(countriesEn)
 
 const InteractiveMap = ({ data, onClickCountry, total }) => {
   const [hoverShow, setHoverShow] = useState(false)
@@ -21,7 +21,7 @@ const InteractiveMap = ({ data, onClickCountry, total }) => {
     const pageY = e.clientY - rect.top
     setCursorPosition({ pageX, pageY })
   }
-  
+
   return (
     <div className='relative'>
       <svg id='map' viewBox='0 0 1050 650' className='w-full h-full' onMouseMove={onMouseMove}>
@@ -44,7 +44,7 @@ const InteractiveMap = ({ data, onClickCountry, total }) => {
                   'cursor-pointer': Boolean(visitors),
                 })}
                 d={item.d}
-                // onClick={() => perc !== 0 && onClickCountry(index)}
+                onClick={() => perc !== 0 && onClickCountry(index)}
                 onMouseEnter={() => {
                   if (visitors) {
                     setHoverShow(true)
@@ -94,8 +94,8 @@ InteractiveMap.propTypes = {
 
 InteractiveMap.defaultProps = {
   data: {},
-  onClickCountry: () => { },
+  onClickCountry: () => {},
   total: 0,
 }
 
-export default InteractiveMap
+export default memo(InteractiveMap)

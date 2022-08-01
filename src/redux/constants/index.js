@@ -13,7 +13,6 @@ const getCustomLabel = (dates) => {
   return 'Custom date'
 }
 
-
 export const tbPeriodPairs = (tbs, dates) => [{
   label: 'Today',
   period: '1d',
