@@ -1,6 +1,6 @@
 import browser from 'webextension-polyfill'
 
-const TOKEN = 'token'
+const TOKEN = 'access_token'
 
 export const getAccessToken = async () => {
   const result = await browser.cookies.get({
