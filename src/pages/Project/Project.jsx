@@ -64,7 +64,7 @@ const getFormatDate = (date) => {
 const NoEvents = () => (
   <div className='flex flex-col py-6 sm:px-6 lg:px-8 mt-5'>
     <div className='max-w-7xl w-full mx-auto'>
-      <h2 className='text-4xl text-center leading-tight my-3'>
+      <h2 className='text-xl text-center leading-tight my-3'>
         No events for the selected timeframe
       </h2>
     </div>
