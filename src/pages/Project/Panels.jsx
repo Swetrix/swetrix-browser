@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types, react/jsx-child-element-spacing */
 import React, { memo, useState, useMemo, Fragment } from 'react'
 import {
-  MapIcon, ViewListIcon,
-} from '@heroicons/react/outline'
-import { ArrowSmUpIcon, ArrowSmDownIcon, FilterIcon } from '@heroicons/react/solid'
+  MapIcon, Bars4Icon, FunnelIcon,
+} from '@heroicons/react/24/outline'
+import { ArrowSmallUpIcon, ArrowSmallDownIcon } from '@heroicons/react/24/solid'
 import cx from 'clsx'
 import PropTypes from 'prop-types'
 import _keys from 'lodash/keys'
@@ -38,7 +38,7 @@ const PanelContainer = ({
       </h3>
       {type === 'cc' && (
         <div className='flex'>
-          <ViewListIcon
+          <Bars4Icon
             className={cx(iconClassName, 'cursor-pointer', {
               'text-blue-500': activeFragment === 0,
               'text-gray-900 dark:text-gray-50': activeFragment === 1,
@@ -142,14 +142,14 @@ const Overview = ({
           >
             {pageviewsDidGrowUp ? (
               <>
-                <ArrowSmUpIcon className='self-center flex-shrink-0 h-4 w-4 text-green-500' />
+                <ArrowSmallUpIcon className='self-center flex-shrink-0 h-4 w-4 text-green-500' />
                 <span className='sr-only'>
                   Increase
                 </span>
               </>
             ) : (
               <>
-                <ArrowSmDownIcon className='self-center flex-shrink-0 h-4 w-4 text-red-500' />
+                <ArrowSmallDownIcon className='self-center flex-shrink-0 h-4 w-4 text-red-500' />
                 <span className='sr-only'>
                   Decrease
                 </span>
@@ -174,14 +174,14 @@ const Overview = ({
           >
             {uniqueDidGrowUp ? (
               <>
-                <ArrowSmUpIcon className='self-center flex-shrink-0 h-4 w-4 text-green-500' />
+                <ArrowSmallUpIcon className='self-center flex-shrink-0 h-4 w-4 text-green-500' />
                 <span className='sr-only'>
                   Increase
                 </span>
               </>
             ) : (
               <>
-                <ArrowSmDownIcon className='self-center flex-shrink-0 h-4 w-4 text-red-500' />
+                <ArrowSmallDownIcon className='self-center flex-shrink-0 h-4 w-4 text-red-500' />
                 <span className='sr-only'>
                   Decrease
                 </span>
@@ -295,14 +295,14 @@ const Panel = ({
                 <a className={cx('flex label hover:underline text-blue-600 dark:text-blue-500', { capitalize })} href={rowData} target='_blank' rel='noopener noreferrer'>
                   {rowData}
                   {!hideFilters && (
-                    <FilterIcon className='ml-2 w-4 text-gray-500 hidden group-hover:block dark:text-gray-300' />
+                    <FunnelIcon className='ml-2 w-4 text-gray-500 hidden group-hover:block dark:text-gray-300' />
                   )}
                 </a>
               ) : (
                 <span className={cx('flex label', { capitalize })}>
                   {rowData}
                   {!hideFilters && (
-                    <FilterIcon className='ml-2 w-4 text-gray-500 hidden group-hover:block dark:text-gray-300' />
+                    <FunnelIcon className='ml-2 w-4 text-gray-500 hidden group-hover:block dark:text-gray-300' />
                   )}
                 </span>
               )}

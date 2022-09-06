@@ -6,8 +6,8 @@ import dayjs from 'dayjs'
 import _isEmpty from 'lodash/isEmpty'
 import _isNumber from 'lodash/isNumber'
 import _map from 'lodash/map'
-import { EyeIcon, CalendarIcon } from '@heroicons/react/outline'
-import { ArrowSmUpIcon, ArrowSmDownIcon } from '@heroicons/react/solid'
+import { EyeIcon, CalendarIcon } from '@heroicons/react/24/outline'
+import { ArrowSmallUpIcon, ArrowSmallDownIcon } from '@heroicons/react/24/solid'
 import PropTypes from 'prop-types'
 
 import { ActivePin, InactivePin } from '../../ui/Pin'
@@ -57,14 +57,14 @@ const ProjectCart = ({
                   >
                     {statsDidGrowUp ? (
                       <>
-                        <ArrowSmUpIcon className='self-center flex-shrink-0 h-4 w-4 text-green-500' />
+                        <ArrowSmallUpIcon className='self-center flex-shrink-0 h-4 w-4 text-green-500' />
                         <span className='sr-only'>
                           Increased
                         </span>
                       </>
                     ) : (
                       <>
-                        <ArrowSmDownIcon className='self-center flex-shrink-0 h-4 w-4 text-red-500' />
+                        <ArrowSmallDownIcon className='self-center flex-shrink-0 h-4 w-4 text-red-500' />
                         <span className='sr-only'>
                           Decreased
                         </span>
