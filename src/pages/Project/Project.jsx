@@ -1,3 +1,4 @@
+/* eslint-disable react/hook-use-state */
 import React, { useState, useEffect, useMemo, memo, useRef } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import Flag from 'react-flagkit'

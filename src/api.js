@@ -38,7 +38,7 @@ api.interceptors.response.use(
       }
     }
 
-    return Promise.reject(error)
+    throw error
   },
 )
 
