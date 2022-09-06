@@ -108,3 +108,4 @@ distribution
 .parcel-cache
 package-lock.json
 pnpm-lock.yaml
+yarn.lock
