@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "prebuild": "rm -rf dist .cache .parcel-cache",
+    "prebuild": "del dist .cache .parcel-cache",
     "fix-assets": "mkdir -p distribution && rm -rf distribution/assets && cp -r assets distribution/assets",
     "build": "parcel build manifest.json --no-content-hash --no-source-maps --dist-dir distribution --no-cache --detailed-report 0 && npm run fix-assets",
     "lint-fix": "run-p 'lint:* -- --fix'",
@@ -87,6 +87,7 @@
     "@types/react": "^18.0.18",
     "@types/react-dom": "^18.0.6",
     "axios": "^0.26.1",
+    "axios-auth-refresh": "^3.3.6",
     "clsx": "^1.2.1",
     "dayjs": "^1.11.5",
     "i18n-iso-countries": "^7.5.0",
@@ -120,6 +121,7 @@
     "parcel": "^2.7.0",
     "postcss-import": "^14.0.2",
     "process": "^0.11.10",
+    "punycode": "^1.4.1",
     "querystring-es3": "^0.2.1",
     "url": "^0.11.0",
     "xo": "^0.52.3"
