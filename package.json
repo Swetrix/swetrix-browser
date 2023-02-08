@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "prebuild": "del dist .cache .parcel-cache",
+    "prebuild": "rm -rf dist .cache .parcel-cache",
     "fix-assets": "mkdir -p distribution && rm -rf distribution/assets && cp -r assets distribution/assets",
     "build": "parcel build manifest.json --no-content-hash --no-source-maps --dist-dir distribution --no-cache --detailed-report 0 && npm run fix-assets",
     "lint-fix": "run-p 'lint:* -- --fix'",
