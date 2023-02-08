@@ -2,9 +2,9 @@ import axios from 'axios'
 import _isEmpty from 'lodash/isEmpty'
 import _map from 'lodash/map'
 import createAuthRefreshInterceptor from 'axios-auth-refresh'
-import { getAccessToken, removeAccessToken, setAccessToken, getRefreshToken, removeRefreshToken } from './utils'
+import { getAccessToken, setAccessToken, getRefreshToken } from './utils'
 
-const baseURL = 'http://localhost:5005/'
+const baseURL = 'https://api.swetrix.com'
 
 const api = axios.create({
   baseURL,
@@ -25,14 +25,14 @@ const refreshAuthLogic = async (failedRequest) =>
       return Promise.resolve()
     })
     .catch((error) => {
-      removeAccessToken()
-      removeRefreshToken()
       store.dispatch(authActions.logout())
       return Promise.reject(error)
     })
 
 // Instantiate the interceptor
-createAuthRefreshInterceptor(api, refreshAuthLogic)
+createAuthRefreshInterceptor(api, refreshAuthLogic, {
+  statusCodes: [401, 403],
+})
 
 api.interceptors.request.use(
   async (config) => {
@@ -53,20 +53,20 @@ api.interceptors.request.use(
   (error) => Promise.reject(error),
 )
 
-api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    if (error.response?.data.statusCode === 401) {
-      try {
-        await removeAccessToken()
-      } catch (error) {
-        console.error('[API RESPONSE INTERCEPTOR]', error)
-      }
-    }
-
-    throw error
-  },
-)
+export const logoutApi = (refreshToken) =>
+  axios
+    .post(`${baseURL}v1/auth/logout`, null, {
+      headers: {
+        Authorization: `Bearer ${refreshToken}`,
+      },
+    })
+    .then((response) => response.data)
+    .catch((error) => {
+      debug('%s', error)
+      throw _isEmpty(error.response.data?.message)
+        ? error.response.data
+        : error.response.data.message
+    })
 
 export const authMe = () =>
   api
