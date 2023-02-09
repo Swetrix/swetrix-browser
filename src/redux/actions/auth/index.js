@@ -1,5 +1,5 @@
 import { types } from './types'
-import { getRefreshToken, removeAccessToken, removeRefreshToken } from '../../../utils/auth'
+import { getRefreshToken, removeAccessToken, removeRefreshToken } from '../../../utils'
 import { logoutApi } from '../../../api'
 
 export const authActions = {
