@@ -1,11 +1,37 @@
 import axios from 'axios'
 import _isEmpty from 'lodash/isEmpty'
 import _map from 'lodash/map'
+import createAuthRefreshInterceptor from 'axios-auth-refresh'
+import { getAccessToken, setAccessToken, getRefreshToken } from './utils'
 
-import { getAccessToken, removeAccessToken } from './utils'
+const baseURL = 'https://api.swetrix.com'
 
 const api = axios.create({
-  baseURL: 'https://api.swetrix.com/',
+  baseURL,
+})
+
+const refreshAuthLogic = async (failedRequest) =>
+  axios
+    .post(`${baseURL}v1/auth/refresh-token`, null, {
+      headers: {
+        Authorization: `Bearer ${await getRefreshToken()}`,
+      },
+    })
+    .then((tokenRefreshResponse) => {
+      const { accessToken } = tokenRefreshResponse.data
+      setAccessToken(accessToken)
+      // eslint-disable-next-line
+      failedRequest.response.config.headers.Authorization = `Bearer ${accessToken}`
+      return Promise.resolve()
+    })
+    .catch((error) => {
+      store.dispatch(authActions.logout())
+      return Promise.reject(error)
+    })
+
+// Instantiate the interceptor
+createAuthRefreshInterceptor(api, refreshAuthLogic, {
+  statusCodes: [401, 403],
 })
 
 api.interceptors.request.use(
@@ -27,24 +53,24 @@ api.interceptors.request.use(
   (error) => Promise.reject(error),
 )
 
-api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    if (error.response?.data.statusCode === 401) {
-      try {
-        await removeAccessToken()
-      } catch (error) {
-        console.error('[API RESPONSE INTERCEPTOR]', error)
-      }
-    }
-
-    throw error
-  },
-)
+export const logoutApi = (refreshToken) =>
+  axios
+    .post(`${baseURL}v1/auth/logout`, null, {
+      headers: {
+        Authorization: `Bearer ${refreshToken}`,
+      },
+    })
+    .then((response) => response.data)
+    .catch((error) => {
+      debug('%s', error)
+      throw _isEmpty(error.response.data?.message)
+        ? error.response.data
+        : error.response.data.message
+    })
 
 export const authMe = () =>
   api
-    .get('/auth/me')
+    .get('/user/me')
     .then((response) => response.data)
     .catch((error) => {
       throw _isEmpty(error.response.data?.message)
@@ -54,7 +80,7 @@ export const authMe = () =>
 
 export const login = (credentials) =>
   api
-    .post('/auth/login', credentials)
+    .post('v1/auth/login', credentials)
     .then((response) => response.data)
     .catch((error) => {
       throw _isEmpty(error.response.data?.message)
@@ -110,6 +136,16 @@ export const getLiveVisitors = (pids) =>
     .then((response) => response.data)
     .catch((error) => {
       console.error('[API RESPONSE CATCH][getLiveVisitors]', error)
+      throw _isEmpty(error.response.data?.message)
+        ? error.response.data
+        : error.response.data.message
+    })
+
+export const refreshToken = () =>
+  api
+    .post('v1/auth/refresh-token')
+    .then((response) => response.data)
+    .catch((error) => {
       throw _isEmpty(error.response.data?.message)
         ? error.response.data
         : error.response.data.message

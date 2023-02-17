@@ -6,8 +6,9 @@ import UIActions from '../../actions/ui'
 export default function* initialise() {
   try {
     const token = yield call(getAccessToken)
+    const refreshToken = yield call(getRefreshToken)
 
-    if (token) {
+    if (token && refreshToken) {
       yield put(UIActions.loadProjects())
     }
   } catch (error) {
