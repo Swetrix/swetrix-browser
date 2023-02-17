@@ -2,6 +2,9 @@ import axios from 'axios'
 import _isEmpty from 'lodash/isEmpty'
 import _map from 'lodash/map'
 import createAuthRefreshInterceptor from 'axios-auth-refresh'
+
+import { authActions } from './redux/actions/auth'
+import { store } from './redux/store'
 import { getAccessToken, setAccessToken, getRefreshToken } from './utils'
 
 const baseURL = 'https://api.swetrix.com'
@@ -20,13 +23,13 @@ const refreshAuthLogic = async (failedRequest) =>
     .then((tokenRefreshResponse) => {
       const { accessToken } = tokenRefreshResponse.data
       setAccessToken(accessToken)
-      // eslint-disable-next-line
       failedRequest.response.config.headers.Authorization = `Bearer ${accessToken}`
+      // eslint-disable-next-line
       return Promise.resolve()
     })
     .catch((error) => {
       store.dispatch(authActions.logout())
-      return Promise.reject(error)
+      throw error
     })
 
 // Instantiate the interceptor
@@ -62,7 +65,7 @@ export const logoutApi = (refreshToken) =>
     })
     .then((response) => response.data)
     .catch((error) => {
-      debug('%s', error)
+      console.error('[API RESPONSE CATCH][logoutApi]', error)
       throw _isEmpty(error.response.data?.message)
         ? error.response.data
         : error.response.data.message

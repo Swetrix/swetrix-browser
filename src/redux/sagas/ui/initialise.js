@@ -1,6 +1,8 @@
 import { put, call } from 'redux-saga/effects'
 
-import { getAccessToken } from '../../../utils'
+import {
+  getAccessToken, getRefreshToken,
+} from '../../../utils'
 import UIActions from '../../actions/ui'
 
 export default function* initialise() {

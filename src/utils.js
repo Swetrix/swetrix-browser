@@ -1,5 +1,4 @@
 import browser from 'webextension-polyfill'
-import _isEmpty from 'lodash/isEmpty'
 
 const TOKEN = 'access_token'
 const REFRESH_TOKEN = 'refresh_token'
@@ -35,7 +34,7 @@ export const removeAccessToken = async () => {
 const STORE_REFRESH_TOKEN_FOR = 8467200
 
 export const getRefreshToken = async () => {
-  await browser.cookies.get({
+  const result = await browser.cookies.get({
     name: REFRESH_TOKEN,
     url: 'https://swetrix.com',
   })

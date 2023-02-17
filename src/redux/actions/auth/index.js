@@ -1,6 +1,6 @@
-import { types } from './types'
 import { getRefreshToken, removeAccessToken, removeRefreshToken } from '../../../utils'
 import { logoutApi } from '../../../api'
+import { types } from './types'
 
 export const authActions = {
   // Synchronous
